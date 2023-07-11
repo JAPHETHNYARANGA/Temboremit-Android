@@ -12,6 +12,7 @@ class LoginUserUseCase @Inject constructor(private val loginUserRepository: Logi
     ):LoginResponse{
         try {
             return loginUserRepository.loginUser( email, password)
+
         }catch (e: Exception){
 
             Log.d("useCase Error", "${e.message}")

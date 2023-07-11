@@ -50,7 +50,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://63f3-197-232-87-139.ngrok-free.app/api/")
+            .baseUrl("https://d5a4-154-70-62-113.ngrok-free.app/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

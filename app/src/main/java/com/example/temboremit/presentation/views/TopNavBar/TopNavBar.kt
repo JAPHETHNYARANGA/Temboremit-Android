@@ -44,23 +44,7 @@ fun TopNavBar() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.notification),
-                        contentDescription = "Notification Icon",
-                        modifier = Modifier.height(24.dp)
-                    )
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.settings),
-                        contentDescription = "Settings Icon",
-                        modifier = Modifier.height(24.dp)
-                    )
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.user),
-                        contentDescription = "Person Icon",
-                        modifier = Modifier.height(24.dp)
-                    )
+                    Text(text = "Japheth Nyaranga")
                 }
             }
         }

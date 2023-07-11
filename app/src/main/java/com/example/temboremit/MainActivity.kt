@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,6 +25,8 @@ import com.example.temboremit.presentation.viewModel.RegisterViewModel
 import com.example.temboremit.presentation.views.LoginUser
 import com.example.temboremit.ui.theme.TemboremitTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import registerUser
 
 
@@ -33,11 +36,6 @@ class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
 
-    private lateinit var sharedPreferences: SharedPreferences
-
-
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -49,14 +47,20 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    sharedPreferences = getSharedPreferences("loginToken", Context.MODE_PRIVATE)
-                    val loginToken = getLoginToken()
+                    val sharedPreferences = getSharedPreferences("loginPreference", Context.MODE_PRIVATE)
+
+                    val loginToken = getLoginToken(sharedPreferences)
+
                     if (loginToken != null) {
-                        // User is already logged in, navigate to home
-                        navController.navigate("home")
-                        Toast.makeText(applicationContext, getLoginToken().toString(), Toast.LENGTH_LONG).show()
+
+                        Toast.makeText(applicationContext, getLoginToken(sharedPreferences).toString(), Toast.LENGTH_LONG).show()
+
+                        NavHost(navController = navController, startDestination = "home" ){
+                            composable("home") {
+                                MainScreen()
+                            }
+                        }
                     } else {
-                        Toast.makeText(applicationContext, getLoginToken().toString(), Toast.LENGTH_LONG).show()
                         // User is not logged in, navigate to login
                         NavHost(navController, startDestination = "login") {
                             composable("login") {
@@ -76,13 +80,13 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
-
                 }
             }
         }
     }
 
-    private fun getLoginToken(): String? {
-        return sharedPreferences.getString("LoginPrefs", null)
+    private fun getLoginToken(sharedPreferences: SharedPreferences): String? {
+        return sharedPreferences.getString("loginPreference", null)
     }
 }
+

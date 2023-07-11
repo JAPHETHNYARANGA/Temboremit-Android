@@ -1,7 +1,9 @@
 package com.example.temboremit.presentation.views
 
+import android.app.Application
 import android.content.Context
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,6 +51,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.example.temboremit.presentation.viewModel.LoginViewModel
 import com.example.temboremit.presentation.viewModel.RegisterViewModel
+import dagger.hilt.android.internal.Contexts.getApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -69,7 +72,10 @@ fun LoginUser(
 
     val context = LocalContext.current
 
-    val sharedPreferences = context.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
+    val sharedPreferences = context.applicationContext.getSharedPreferences(
+        "loginPreference",
+        Context.MODE_PRIVATE
+    )
 
 
     Box(){
@@ -189,9 +195,10 @@ fun LoginUser(
 
                                                 if(response.status){
                                                     val editor = sharedPreferences.edit()
-                                                    editor.putString("loginToken", response.token)
+                                                    editor.putString("loginPreference", response.token)
                                                     editor.apply()
                                                     navController.navigate("home")
+
                                                 }
 
                                             }

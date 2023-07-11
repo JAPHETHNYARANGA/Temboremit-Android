@@ -25,13 +25,20 @@ sealed class BottomBarScreen(
     // for report
     object Report: BottomBarScreen(
         route = "report",
-        title = "Report",
+        title = "cards",
         icon = R.drawable.ic_bottom_report,
         icon_focused = R.drawable.ic_bottom_report_focused
     )
 
     // for report
     object Profile: BottomBarScreen(
+        route = "profile",
+        title = "Exchange",
+        icon = R.drawable.ic_bottom_profile,
+        icon_focused = R.drawable.ic_bottom_profile_focused
+    )
+
+    object Jama: BottomBarScreen(
         route = "profile",
         title = "Profile",
         icon = R.drawable.ic_bottom_profile,
