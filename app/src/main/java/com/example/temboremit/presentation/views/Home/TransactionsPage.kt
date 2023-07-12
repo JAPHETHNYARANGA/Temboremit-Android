@@ -5,7 +5,8 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-fun SettingsPage(){
+fun TransactionsPage(){
+
 
 
 

@@ -15,17 +15,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.example.temboremit.R
-import com.example.temboremit.presentation.views.TopNavBar.TopNavBar
+
 
 
 @Composable
 fun HomeScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        // TopNavBar positioned at the top
-        Row() {
-            TopNavBar()
-        }
+
 
 
         Column(

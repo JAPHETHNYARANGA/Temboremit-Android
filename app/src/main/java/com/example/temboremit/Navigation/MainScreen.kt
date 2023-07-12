@@ -1,6 +1,8 @@
 package com.example.temboremit.Navigation
 
 
+import TopNavBar
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,13 +17,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -29,33 +33,35 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.temboremit.utils.checkInternetConnection
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(isInternetConnected: MutableState<Boolean>) {
     val navController = rememberNavController()
-
-
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-//        drawerElevation = 0.dp,
-//        backgroundColor = Color.White,
+        topBar = { TopNavBar(isInternetConnected.value) },
         bottomBar = { BottomBar(navController = navController) }
     ) {
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)) {
             BottomNavGraph(navController = navController)
         }
     }
 }
+
 
 @Composable
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Home,
         BottomBarScreen.Report,
+        BottomBarScreen.Transaction,
         BottomBarScreen.Profile,
-        BottomBarScreen.Jama
     )
 
     val navStackBackEntry by navController.currentBackStackEntryAsState()
@@ -134,11 +140,7 @@ fun AddItem(
     }
 }
 
-@Composable
-@Preview
-fun BottomNavPreview() {
-    MainScreen()
-}
+
 
 
 
